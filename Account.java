@@ -1,32 +1,46 @@
-
-import java.util.Date;
-import bankingsystem.customer.owner;
-
 public abstract class Account {
     protected String accountNumber;
     protected double balance;
-    protected String accountType;
-    protected Date dateCreated;
-    protected Customer owner;
+    protected Customer customer;
 
-    public Account(String accountNumber, String accountType, Customer owner ) {
+    public Account(String accountNumber, Customer customer) {
         this.accountNumber = accountNumber;
-        this.accountType = accountType;
-        this.owner = owner;
-        this.dateCreated = new Date();
+        this.customer = customer;
         this.balance = 0.0;
     }
 
-    public abstract void deposit(double amount);
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     public double getBalance() {
         return balance;
     }
 
-    public void getAccountDetails() {
-        System.out.println("Account Number: " + accountNumber);
-        System.out.println("Account Type: " + accountType);
-        System.out.println("Balance: " + balance);
-        System.out.println("Date Created: " + dateCreated);
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Deposited " + amount + " into account " + accountNumber);
+        } else {
+            System.out.println("Invalid deposit amount!");
+        }
+    }
+
+    public abstract String getAccountType();
 }

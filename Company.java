@@ -1,31 +1,37 @@
-package bankingsystem.customers;
-
 import java.util.Date;
-import bankingsystem.accounts.Account;
 
 public class Company extends Customer {
     private String companyName;
-    private String registrationNo;
-    private String contactPerson;
+    private String registrationNumber;
 
-    public Company(String email, Date dateRegistered, String companyName, String registrationNo, String contactPerson) {
-        super(email, dateRegistered);
+    public Company(String customerID, String email, Date dateRegistered, String companyName, String registrationNumber) {
+        super(customerID, email, dateRegistered);
         this.companyName = companyName;
-        this.registrationNo = registrationNo;
-        this.contactPerson = contactPerson;
+        this.registrationNumber = registrationNumber;
     }
 
-    @Override
-    public void addAccount(Account account) {
-        System.out.println("Account added for company: " + companyName);
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getRegistrationNumber() {
+        return registrationNumber;
+    }
+
+    public void setRegistrationNumber(String registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
     @Override
     public void getCustomerDetails() {
+        System.out.println("Customer ID: " + customerID);
         System.out.println("Company Name: " + companyName);
-        System.out.println("Registration No: " + registrationNo);
-        System.out.println("Contact Person: " + contactPerson);
         System.out.println("Email: " + email);
-        System.out.println("Date Registered: " + dateRegistered);
+        System.out.println("Registered: " + dateRegistered);
+        System.out.println("Reg Number: " + registrationNumber);
     }
 }

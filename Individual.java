@@ -1,30 +1,47 @@
-package bankingsystem.customers;
-
 import java.util.Date;
-import bankingsystem.accounts.Account;
 
 public class Individual extends Customer {
     private String firstName;
     private String lastName;
-    private String nationalId;
+    private String idNumber;
 
-    public Individual(String email, Date dateRegistered, String firstName, String lastName, String nationalId) {
-        super(email, dateRegistered);
+    public Individual(String customerID, String email, Date dateRegistered, String firstName, String lastName, String idNumber) {
+        super(customerID, email, dateRegistered);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nationalId = nationalId;
+        this.idNumber = idNumber;
     }
 
-    @Override
-    public void addAccount(Account account) {
-        System.out.println("Account added for individual: " + firstName + " " + lastName);
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     @Override
     public void getCustomerDetails() {
-        System.out.println("Customer Name: " + firstName + " " + lastName);
-        System.out.println("National ID: " + nationalId);
+        System.out.println("Customer ID: " + customerID);
+        System.out.println("Name: " + firstName + " " + lastName);
         System.out.println("Email: " + email);
-        System.out.println("Date Registered: " + dateRegistered);
+        System.out.println("Registered: " + dateRegistered);
+        System.out.println("ID Number: " + idNumber);
     }
 }

@@ -1,10 +1,7 @@
-package bankingsystem.customers;
-
 import java.util.Date;
-import bankingsystem.accounts.Account;
 
 public abstract class Customer {
-    protected String customerID;    
+    protected String customerID;
     protected String email;
     protected Date dateRegistered;
 
@@ -18,7 +15,25 @@ public abstract class Customer {
         return customerID;
     }
 
-    public abstract void addAccount(Account account);
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Date getDateRegistered() {
+        return dateRegistered;
+    }
+
+    public void setDateRegistered(Date dateRegistered) {
+        this.dateRegistered = dateRegistered;
+    }
+
     public abstract void getCustomerDetails();
 }
-
