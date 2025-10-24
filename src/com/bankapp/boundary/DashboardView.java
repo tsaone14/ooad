@@ -13,12 +13,19 @@ public class DashboardView {
         Label title = new Label("Bank Dashboard");
         title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
+        Button depositButton = new Button("Deposit Funds");
+        Button withdrawButton = new Button("Withdraw Funds");
         Button accountButton = new Button("Manage Accounts");
-        Button depositButton = new Button("Deposit");
-        Button withdrawButton = new Button("Withdraw");
         Button logoutButton = new Button("Logout");
+        Button customersButton = new Button("View Customers");
 
-        VBox layout = new VBox(15, title, accountButton, depositButton, withdrawButton, logoutButton);
+        depositButton.setOnAction(e -> new DepositView().start(stage));
+        withdrawButton.setOnAction(e -> new WithdrawView().start(stage));
+        accountButton.setOnAction(e -> new AccountView().start(stage));
+        logoutButton.setOnAction(e -> new LoginView().start(stage));
+        customersButton.setOnAction(e -> new CustomerView().start(stage));
+
+        VBox layout = new VBox(15, title, depositButton, withdrawButton, accountButton, customersButton  ,logoutButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
 
