@@ -1,0 +1,2 @@
+C9283,user@gmail.com,Individual,John,Doe,ID123
+C2622,company@gmail.com,Company,SparklesCorp,RC222

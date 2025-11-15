@@ -1,5 +1,7 @@
 package com.bankapp.boundary;
 
+import com.bankapp.File.CustomerFileDAO;
+import com.bankapp.File.AccountFileDAO;
 import com.bankapp.model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,42 +9,56 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.util.*;
+
+import java.util.List;
 
 public class CustomerView {
+
     public void start(Stage stage) {
+
         Label title = new Label("Select Customer");
         title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
 
         ListView<String> customerList = new ListView<>();
-        customerList.getItems().addAll(" Katlego Mods  (Individual)", "SparklesByCath Ltd (Company)");
+
+        CustomerFileDAO cdao = new CustomerFileDAO();
+        List<Customer> customers = cdao.loadCustomers();
+
+        for (Customer c : customers) {
+            customerList.getItems().add(c.getCustomerID() + " (" + c.getEmail() + ")");
+        }
 
         Button viewButton = new Button("View Account");
         Button backButton = new Button("Back");
         Label feedback = new Label();
 
         viewButton.setOnAction(e -> {
-            String selected = customerList.getSelectionModel().getSelectedItem();
-            if (selected == null) {
+            int index = customerList.getSelectionModel().getSelectedIndex();
+            if (index < 0) {
                 feedback.setText("⚠ Please select a customer.");
                 return;
             }
 
-            Customer customer;
-            Account account;
+            Customer selectedCustomer = customers.get(index);
 
-            if (selected.contains("Katlego Mods")) {
-                customer = new Individual("C001", "katmods@gmail.com", new Date(), "Katlego", "Mods", "ID-1111");
-                account = new SavingsAccount("A001", customer);
-                account.setBalance(1000);
-            } else {
-                customer = new Company("C002", "info@sparklesbycath.com", new Date(), "SparklesByCath Ltd", "RC-12345");
-                account = new ChequeAccount("A002", customer);
-                account.setBalance(5000);
+            AccountFileDAO adao = new AccountFileDAO();
+            List<Account> accounts = adao.loadAccounts(customers);
+
+            Account selectedAccount = null;
+
+            for (Account a : accounts) {
+                if (a.getCustomer().getCustomerID().equals(selectedCustomer.getCustomerID())) {
+                    selectedAccount = a;
+                    break;
+                }
             }
 
-            // Open account details for selected customer
-            new AccountDetailsView(customer, account).start(stage);
+            if (selectedAccount == null) {
+                feedback.setText("⚠ Customer has no account yet.");
+                return;
+            }
+
+            new AccountDetailsView(selectedCustomer, selectedAccount).start(stage);
         });
 
         backButton.setOnAction(e -> new DashboardView().start(stage));
@@ -51,9 +67,7 @@ public class CustomerView {
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
 
-        Scene scene = new Scene(layout, 400, 350);
-        stage.setTitle("Customer Accounts");
-        stage.setScene(scene);
+        stage.setScene(new Scene(layout, 400, 350));
         stage.show();
     }
 }
